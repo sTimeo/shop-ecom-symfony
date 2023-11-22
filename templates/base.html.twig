@@ -4,13 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>aze</title>
+<title>{% block title %}La Boutique A{% endblock %}</title>
+
 </head>
 <body>
-    
-  {% block register %}
 
+{% block header %}
+
+      <a href="{{path ('app_home')}}">Accueil</a> 
+
+    {% if app.user %}
+      <a href="{{path ('app_account')}}">mon compte</a> | <a href="{{path ('app_logout')}}">deconnexion</a>
+    {% else %}
+      <a href="{{path ('app_login')}}">connexion</a>/ <a href="{{path ('register')}}">inscription</a>
+    {% endif %}
 
 {% endblock %}
-</body>
+    
+{% block content %}
+
+<p>bienvenue sur la boutique A</p>
+{% endblock %}
+
+
+
 </html>
