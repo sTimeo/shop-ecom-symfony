@@ -1,7 +1,44 @@
 {% extends 'base.html.twig' %}
 {% block title %}La boutique A - Inscription{% endblock %}
-{% block content %}
 
-<h1>Inscription</h1>
-    {{form(form)}}
+{% block content %}
+    <div class="register-content">
+    
+    <h1>Inscription</h1>   
+
+{{ form_start(form) }}
+    {{ form_widget(form._token) }}
+    <div class="first_last_name">     
+        <div class="error">{{form_errors(form.firstname)}}</div>
+        <div>
+            
+            {{form_label(form.firstname)}}
+            {{ form_widget(form.firstname) }}
+        </div>
+        <div>
+            {{form_label(form.lastname)}}
+            {{ form_widget(form.lastname) }} 
+        </div>
+    </div>
+
+    <div>
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+    </div>
+
+    <div>
+        
+        {{ form_widget(form.password) }}
+    </div>
+
+    <div>
+
+        {{ form_row(form.birthdate) }}
+    </div>
+    <div>
+                {{ form_widget(form.submit) }}
+
+    </div>
+{{ form_end(form) }}
+
 {% endblock %}
