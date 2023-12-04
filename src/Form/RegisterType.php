@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User; 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -11,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 class RegisterType extends AbstractType
 {
@@ -18,26 +21,67 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('firstname', TextType::class,[
-                'label' => 'votre prénom'
+                'label' => 'Prénom',
+               'required' => false,
+
+               'constraints' => [
+                new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+            ]
+
+
+            
             ])
             ->add('lastname', TextType::class,[
-                'label' => 'votre nom'
+
+                'label' => 'Nom',
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+
+                ]
+    
+
+
             ])
             ->add('email', EmailType::class,[
-                'label' => 'votre email'
+                'label' => 'Email',
+                'required' => false,
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+
+                ]
+                
+       
             ])
             ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => 'Le mot de passe et la confirmation doivent etre identique',
-                'label'=> 'entrz votre mdp',
-                'required' => true,
-                'first_options' =>['label' =>'mdp'],
-                'second_options' => [ 'label' =>'confirm mdp']
+                'invalid_message' => 'Les mot de passe doivent être identique',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => false,
+
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer le mot passe'],
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+
+                ]
+    
+            
                 ])
          
             ->add('submit', SubmitType::class,[
-                'label' => "s'inscrire"
+                'label' => "S'inscrire"
+            ])
+
+            ->add('birthdate', BirthdayType::class , [
+                'required' => false,
+                'format' => 'dd-MM-yyyy',
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+
+                ]
             ]);
+            
         
     }
 
