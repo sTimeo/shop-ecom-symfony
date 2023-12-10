@@ -1,36 +1,52 @@
 {% extends 'base.html.twig' %}
 {% block title %}La boutique A - Inscription{% endblock %}
+{% block stylesheets %} <link rel="stylesheet" href="{{ asset('assets/css/register.css')}}">{% endblock %}
+{% block javascript %} <script src="{{ asset('assets/js/errorRegister.js')}}"></script>{% endblock %}
 
 {% block content %}
 <div class="register-content">
+    <div class="bloc-content" >
+     <h1>Inscription</h1>   
 
-    <h1>Inscription</h1>   
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<div class="error error-display">
+    <p class="notblank">Tout les champs sont obligatoire</p>
+</div>
 
-    {{ form_start(form, {'attr': {'class': 'form_register'}}) }}
-
+        <div class="first-last-name">
         <div>
-            {{ form_widget(form.firstname)}}
-        </div>
+                    {{ form_widget(form.firstname)}}
+                </div>
 
-        <div>
-            {{ form_widget(form.lastname) }}
-        </div>
+                <div>
+                    {{ form_widget(form.lastname) }}
+                </div>
 
+        </div>
+        
         <div>
             {{ form_widget(form.email) }}
         </div>
 
         <div>
-            {{ form_widget(form.password) }}
+            {{ form_widget(form.password.first) }}
         </div>
 
         <div>
-            {{ form_widget(form.birthdate) }}
+            {{ form_widget(form.password.second) }}
         </div>
+
+            {{ form_widget(form.birthdate) }}
+        
 
         <div>
             {{ form_widget(form.submit) }}
         </div>
     {{ form_end(form) }}
 
+    </div>
+   
+{% endblock %}
+
+{% block footer %}
 {% endblock %}
