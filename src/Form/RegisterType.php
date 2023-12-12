@@ -23,22 +23,34 @@ class RegisterType extends AbstractType
             ->add('firstname', TextType::class,[
                 'label' => 'Prénom',
                'required' => false,
-
+               'attr' => ['placeholder' => 'Prénom'],
                'constraints' => [
-                new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+                new Assert\Regex([
+                    'pattern' => '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
+                    'message' => "Le nom de famille ne peut contenir que des lettres et des espaces.",
+                ]),
+                new Assert\NotBlank([
+                    'message' => "Champ vide",
+                ])
             ]
-
-
+            
             
             ])
             ->add('lastname', TextType::class,[
 
                 'label' => 'Nom',
                 'required' => false,
+                'attr' => ['placeholder' => 'Nom'],
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
-
+                    new Assert\Regex([
+                        'pattern' => '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
+                        'message' => "Le nom de famille ne peut contenir que des lettres et des espaces.",
+                    ]),
+                    new Assert\NotBlank([
+                        'message' => "Champ vide",
+                    ])
                 ]
+
     
 
 
@@ -46,27 +58,23 @@ class RegisterType extends AbstractType
             ->add('email', EmailType::class,[
                 'label' => 'Email',
                 'required' => false,
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+                'attr' => ['placeholder' => 'Email'],
 
-                ]
                 
        
             ])
             ->add('password', RepeatedType::class,[
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les mot de passe doivent être identique',
-                'options' => ['attr' => ['class' => 'password-field']],
                 'required' => false,
-
-                'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot passe'],
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
-
-                ]
-    
-            
+                
+                'first_options' => [
+                    'label' => ' ',
+                    'attr' => ['placeholder' => 'Mot de passe'],
+                ],
+                'second_options' => [
+                    'label' => ' ',
+                    'attr' => ['placeholder' => 'Confirmer le mot de passe'],
+                ],
                 ])
          
             ->add('submit', SubmitType::class,[
@@ -76,10 +84,12 @@ class RegisterType extends AbstractType
             ->add('birthdate', BirthdayType::class , [
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'tous les champs sont obligatoires'])
+                'placeholder' => [
+                    'day' => 'Jour',
+                    'month' => 'Mois',
+                    'year' => 'Année',
+                ],
 
-                ]
             ]);
             
         

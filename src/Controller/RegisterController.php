@@ -52,6 +52,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 //use Doctrine\Persistence\ManagerRegistry;
  
@@ -73,10 +74,16 @@ class RegisterController extends AbstractController
         $form = $this->createForm(RegisterType::class, $user);
  
         $form->handleRequest($request);
- 
+        $not = null;
         if ($form->isSubmitted() && $form->isValid()) {
- 
+            $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $user->getEmail()]);
+
+            if ($existingUser) {
+                $EmailExist = "L'adresse Email existe déjà";
+            }else{
+
             $user = $form->getData();
+            
 
             //sert a encoder le mdp dans la db.
             $password = $passwordHasher->hashPassword($user, $user->getPassword());
@@ -85,10 +92,14 @@ class RegisterController extends AbstractController
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
+            $EmailExist = 'Votre compte à bien été créé';
+
+            }
+
         }
  
         return $this->render('register/index.html.twig', [
-            'form' => $form->createView()
-        ]);
+            'form' => $form->createView(),
+                ]);
     }
 }
