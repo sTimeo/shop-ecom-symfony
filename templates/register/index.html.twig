@@ -9,17 +9,26 @@
      <h1>Inscription</h1>   
 
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-<div class="error error-display">
-    <p class="notblank">Tout les champs sont obligatoire</p>
-</div>
+
+    {{form_errors(form.email)}}
 
         <div class="first-last-name">
         <div>
                     {{ form_widget(form.firstname)}}
+{%- if form.firstname is defined and form.firstname.vars.errors|length > 0 -%}
+        {%- for error in form.firstname.vars.errors -%}
+            <span class="d-block">
+                <span class="form-error-message">{{ error.message }}</span>
+            </span>
+        {%- endfor -%}
+    </span>
+{%- endif %}
                 </div>
 
                 <div>
                     {{ form_widget(form.lastname) }}
+
+
                 </div>
 
         </div>
