@@ -20,30 +20,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank()]
-    #[Assert\Email(message : "L'adresse email '{{ value }}' n'est pas valide.")]
+    #[Assert\Email()]
     private ?string $email = null;
 
     #[ORM\Column]
     private array $roles = [];
 
     #[ORM\Column]
-    
-    
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 15)]
     #[Assert\Regex(
-        pattern: '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
-        message: "Le prénom ne peut contenir que des lettres et des espaces."
+        pattern: '/^[a-zA-Z]+$/'
     )]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 15)]
     #[Assert\Regex(
-        pattern: '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
-        message: "Le nom de famille ne peut contenir que des lettres et des espaces."
+        pattern: '/^[a-zA-Z]+$/'
     )]
-
     private ?string $lastname = null;
 
     #[ORM\Column(type: 'date', nullable: true)]

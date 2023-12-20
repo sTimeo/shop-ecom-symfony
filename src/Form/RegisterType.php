@@ -18,82 +18,55 @@ use Symfony\Component\Validator\Constraints as Assert;
 class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('firstname', TextType::class,[
-                'label' => 'Prénom',
-               'required' => false,
-               'attr' => ['placeholder' => 'Prénom'],
-               'constraints' => [
-                new Assert\Regex([
-                    'pattern' => '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
-                    'message' => "Le nom de famille ne peut contenir que des lettres et des espaces.",
-                ]),
-                new Assert\NotBlank([
-                    'message' => "Champ vide",
-                ])
-            ]
-            
-            
-            ])
-            ->add('lastname', TextType::class,[
+{
+$builder
+->add('firstname', TextType::class,[
+'label' => 'Prénom',
+'required' => false,
+'attr' => ['placeholder' => 'Prénom'],
+])
 
-                'label' => 'Nom',
-                'required' => false,
-                'attr' => ['placeholder' => 'Nom'],
-                'constraints' => [
-                    new Assert\Regex([
-                        'pattern' => '/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/u',
-                        'message' => "Le nom de famille ne peut contenir que des lettres et des espaces.",
-                    ]),
-                    new Assert\NotBlank([
-                        'message' => "Champ vide",
-                    ])
-                ]
+->add('lastname', TextType::class,[
+'label' => 'Nom',
+'required' => false,
+'attr' => ['placeholder' => 'Nom'],
+])
 
-    
+->add('email', EmailType::class,[
+'label' => 'Email',
+'required' => false,
+'attr' => ['placeholder' => 'Email'],
+])
+
+->add('password', RepeatedType::class,[
+'type' => PasswordType::class,
+'required' => false,
+
+'first_options' => [
+'attr' => ['placeholder' => 'Mot de passe'],
+],
+'second_options' => [
+'attr' => ['placeholder' => 'Confirmer le mot de passe'],
+],
+])
+
+->add('submit', SubmitType::class,[
+'label' => "S'inscrire"
+])
+
+->add('birthdate', BirthdayType::class , [
+'required' => false,
+'format' => 'ddMMyyyy',
+'placeholder' => [
+'day' => 'Jour',
+'month' => 'Mois',
+'year' => 'Année',
+],
+
+]);
 
 
-            ])
-            ->add('email', EmailType::class,[
-                'label' => 'Email',
-                'required' => false,
-                'attr' => ['placeholder' => 'Email'],
-
-                
-       
-            ])
-            ->add('password', RepeatedType::class,[
-                'type' => PasswordType::class,
-                'required' => false,
-                
-                'first_options' => [
-                    'label' => ' ',
-                    'attr' => ['placeholder' => 'Mot de passe'],
-                ],
-                'second_options' => [
-                    'label' => ' ',
-                    'attr' => ['placeholder' => 'Confirmer le mot de passe'],
-                ],
-                ])
-         
-            ->add('submit', SubmitType::class,[
-                'label' => "S'inscrire"
-            ])
-
-            ->add('birthdate', BirthdayType::class , [
-                'required' => false,
-                'format' => 'dd-MM-yyyy',
-                'placeholder' => [
-                    'day' => 'Jour',
-                    'month' => 'Mois',
-                    'year' => 'Année',
-                ],
-
-            ]);
-            
-        
-    }
+}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
